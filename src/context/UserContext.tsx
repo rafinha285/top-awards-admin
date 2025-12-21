@@ -9,6 +9,7 @@ export interface UserContextProps {
     user: User | null;
     login: (user: User,token: string) => void;
     logout: () => void;
+    getToken: () => string | null;
 }
 
 type UserContextState = BaseState & {
@@ -23,6 +24,9 @@ export const UserContext = createContext<UserContextProps>({
     user: null,
     login: ()=>{},
     logout: ()=>{},
+    getToken(): string | null {
+        return null;
+    }
 })
 
 export class UserProvider extends React.PureComponent<{children: ReactNode}, UserContextState>{
@@ -59,6 +63,9 @@ export class UserProvider extends React.PureComponent<{children: ReactNode}, Use
             isAdmin: false,
         })
     }
+    public getToken = (): string | null => {
+        return localStorage.getItem("token")
+    }
 
     render() {
         const {isLoggedIn, isAdmin, user, error} = this.state;
@@ -68,6 +75,7 @@ export class UserProvider extends React.PureComponent<{children: ReactNode}, Use
             user,
             login: this.login,
             logout: this.logout,
+            getToken: this.getToken,
         }
 
         if(error){

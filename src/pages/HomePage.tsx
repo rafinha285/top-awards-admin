@@ -1,5 +1,6 @@
 import {BasePage, type BaseProps, type BaseState} from "./BasePage.tsx";
 import "../css/homePage.scss"
+import {Link} from "react-router-dom";
 
 type HomeState = BaseState & {
 }
@@ -7,30 +8,31 @@ type HomeState = BaseState & {
 export class HomePage extends BasePage<BaseProps, HomeState>{
     protected renderContent(): React.ReactNode {
         return (
-            <div className="main-home-wrapper">
-                <div className="main-home">
-                    <div className="menu">
-                        <button className="menu-item">
-                            <p>Criar Evento</p>
-                        </button>
-                        <a className="menu-item">
-                            <p>Criar Nomeado</p>
-                        </a>
-                        <a className="menu-item">
-                            <p>Criar Categoria</p>
-                        </a>
-                        <a className="menu-item">
-                            <p>Gerenciar usuários</p>
-                        </a>
-                    </div>
-                    <div className="graphs">
-
-                    </div>
-                    <div className="details">
-
-                    </div>
+            <>
+                <div className="menu">
+                    <Link to={"/create/event"} className="menu-item">
+                        <p>Criar Evento</p>
+                    </Link>
+                    <Link to={"/create/nominee"} className="menu-item">
+                        <p>Criar Nomeado</p>
+                    </Link>
+                    <Link to={"/create/category"} className="menu-item">
+                        <p>Criar Categoria</p>
+                    </Link>
+                    <Link to={"/moderate/users"} className="menu-item">
+                        <p>Gerenciar usuários</p>
+                    </Link>
+                    <Link to={"/moderate/votes"} className="menu-item">
+                        <p>Gerenciar votos</p>
+                    </Link>
                 </div>
-            </div>
+                <div className="graphs">
+
+                </div>
+                <div className="details">
+
+                </div>
+            </>
         )
     }
 

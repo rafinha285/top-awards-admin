@@ -2,7 +2,6 @@ import {BasePage, type BaseProps, type BaseState} from "./BasePage.tsx";
 import * as React from "react";
 import "../css/loginPage.scss"
 import type {User} from "../types/User.ts";
-import {Link} from "react-router-dom";
 
 type LoginPageState = BaseState & {
     email: string,
@@ -73,7 +72,7 @@ export class LoginPage extends BasePage<BaseProps, LoginPageState>{
                 onChange={(v)=>this.setState({password: v.target.value})}
             />
             <button onClick={this.sendInfo}>Login</button>
-            <p className="register-text">Não tem uma conta? <Link to="/register">Registre-se</Link></p>
+            {/*<p className="register-text">Não tem uma conta? <Link to="/register">Registre-se</Link></p>*/}
         </div>
     }
 }

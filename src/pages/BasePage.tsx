@@ -6,7 +6,6 @@ import "../css/mainPage.scss"
 import "../css/base.scss"
 import axios from "axios";
 import {ErrorCode, type ResponseType} from "../types/ResponseTypes.ts";
-import {UserContext} from "../context/UserContext.tsx";
 import {NavigationService} from "../service/NavigationService.tsx";
 
 export interface BaseProps{
@@ -20,8 +19,6 @@ export interface BaseState{
 }
 
 export abstract class BasePage<P extends BaseProps, S extends BaseState> extends BaseComponent<P, S>{
-    static contextType = UserContext;
-    declare context: React.ContextType<typeof UserContext>;
 
     public constructor(props: P, initialState: S);
     public constructor(initialState: S);
@@ -110,7 +107,13 @@ export abstract class BasePage<P extends BaseProps, S extends BaseState> extends
                 <Header/>
                 {this.state.error ? (
                     this.getError(this.state.error)
-                ) : this.renderContent()}
+                ) : <>
+                    <div className="main-home-wrapper" >
+                        <div className="main-home">
+                            {this.renderContent()}
+                        </div>
+                    </div>
+                </>}
             </>
         )
     }
