@@ -1,7 +1,8 @@
 import {BasePage, type BaseProps, type BaseState} from "./BasePage.tsx";
 import type {FormSchema, FormState} from "../types/FromOption.ts";
-import type {ChangeEvent, JSX} from "react";
+import  {type ChangeEvent, type JSX} from "react";
 import "../css/creationPage.scss"
+import * as React from "react";
 
 export interface BaseFormState<T> extends BaseState, FormState<T> {}
 
@@ -92,6 +93,9 @@ export abstract class BaseFormPage<
             }
         })
     }
+    protected headerActions(): React.ReactNode {
+        return null
+    }
 
     protected abstract getFormSchema(): F;
 
@@ -104,6 +108,7 @@ export abstract class BaseFormPage<
                 <div className="form-header">
                     <h1>{this.state.title}</h1>
                     <div className="header-actions">
+                        {this.headerActions()}
                     </div>
                 </div>
                 <main className='fields'>

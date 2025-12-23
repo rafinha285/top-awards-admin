@@ -6,6 +6,7 @@ import {NavigationService} from "./service/NavigationService.tsx";
 import {useEffect} from "react";
 import {EventCreationPage} from "./pages/creationPages/EventCreationPage.tsx";
 import {EventEditPage} from "./pages/editPages/EventEditPage.tsx";
+import {EventListPage} from "./pages/listPages/EventListPage.tsx";
 
 const NavigationSetup = () => {
     const navigate = useNavigate();
@@ -24,6 +25,7 @@ function App() {
                 <Routes>
                     <Route path="/" element={<LoginPage/>} />
                     <Route path="/home" element={<HomePage/>}/>
+                    <Route path="/edit/event" element={<EventListPage/>}/>
                     <Route path="/create/event" element={<EventCreationPage/>}/>
                     <Route path="/edit/event/:id" element={<EventEditPage/>}/>
                 </Routes>
