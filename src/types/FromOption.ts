@@ -5,14 +5,12 @@ export interface FormOption {
     value: string;
 }
 
-export type FieldType = 'text' | 'textarea' | 'date' | 'select';
-
-export type GetArrayPath = "genre" | "state" | "producers" | "creators" | "studios";
+export type FieldType = 'text' | 'textarea' | 'date' | 'select' | 'readonly';
 
 export interface FormField {
     label: string;
     type: FieldType;
-    path?: GetArrayPath;
+    // path?: GetArrayPath;
     options?: FormOption[];
 }
 

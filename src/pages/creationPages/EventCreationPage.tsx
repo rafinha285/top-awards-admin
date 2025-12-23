@@ -1,7 +1,8 @@
-import {BaseCreationPage, type BaseCreationPageState} from "./BaseCreationPage.tsx";
+import {BaseCreationPage} from "./BaseCreationPage.tsx";
 import type Event from "../../types/Event.ts"
 import type {FormSchema} from "../../types/FromOption.ts";
 import type {BaseProps} from "../BasePage.tsx";
+import type {BaseFormState} from "../BaseFormPage.tsx";
 
 const EVENT_FORM_SCHEMA: FormSchema<Event> = {
     name: {label:"Nome", type: "text"},
@@ -11,7 +12,10 @@ const EVENT_FORM_SCHEMA: FormSchema<Event> = {
 }
 
 export class EventCreationPage extends BaseCreationPage<Event, typeof EVENT_FORM_SCHEMA, BaseProps>{
-    state: BaseCreationPageState<Event> = {
+    protected getResourceName(): string {
+        return "event";
+    }
+    state: BaseFormState<Event> = {
         error: null,
         loading: false,
         title: "Novo Evento",
@@ -23,13 +27,6 @@ export class EventCreationPage extends BaseCreationPage<Event, typeof EVENT_FORM
         }
     }
 
-    protected async handleCreation(): Promise<void> {
-        const event: Event = this.state.formData;
-        const response = await this.postToApi<Event, object>("/event/new", event);
-        if(response && response.data.success) {
-            console.log(response);
-        }
-    }
     protected getFormSchema(): typeof EVENT_FORM_SCHEMA {
         return EVENT_FORM_SCHEMA;
     }

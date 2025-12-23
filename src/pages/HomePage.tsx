@@ -10,8 +10,8 @@ export class HomePage extends BasePage<BaseProps, HomeState>{
         return (
             <>
                 <div className="menu">
-                    <Link to={"/create/event"} className="menu-item">
-                        <p>Criar Evento</p>
+                    <Link to={"/edit/event"} className="menu-item">
+                        <p>Eventos</p>
                     </Link>
                     <Link to={"/create/nominee"} className="menu-item">
                         <p>Criar Nomeado</p>

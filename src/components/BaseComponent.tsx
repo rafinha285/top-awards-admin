@@ -25,7 +25,12 @@ export abstract class BaseComponent<P, S> extends React.PureComponent<P, S>{
             "Authorization": `Bearer ${this.context.getToken()}`,
             ...header,
         }
-        return await axios.get<ResponseType<T>>(`${API_URL}${path}`, {headers})
+        const response =  await axios.get<ResponseType<T>>(`${API_URL}${path}`, {headers})
+        if(response.status !== 200){
+            this.context.logout()
+            window.location.href = "/"
+        }
+        return response
     }
 
     protected async getFingerprint(){
