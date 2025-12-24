@@ -14,7 +14,7 @@ services:
     # Esquerda (8082): Porta do seu servidor (acesso externo)
     # Direita (80): Porta onde o Nginx roda DENTRO do container (NÃO MUDE PARA 8082)
     ports:
-      - "8082:80"
+      - "8082:8082"
 
     environment:
       - VITE_API_URL=https://awards-api.animefoda.org
