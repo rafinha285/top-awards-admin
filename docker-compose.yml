@@ -15,4 +15,4 @@ services:
 
     # AQUI ESTÁ A MÁGICA PARA O PORTAINER:
     environment:
-      - VITE_API_URL=https://awards-api.animefoda.org:8080
+      - VITE_API_URL=https://awards-api.animefoda.org
