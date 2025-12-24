@@ -3,7 +3,7 @@ version: '3.8'
 services:
   frontend:
     container_name: topawards-admin-front
-    image: seu-usuario/topawards-front:latest # Ou use o build context abaixo
+    image: topawards-front-local # Ou use o build context abaixo
     build:
       context: .
       dockerfile: Dockerfile
