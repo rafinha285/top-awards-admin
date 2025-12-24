@@ -10,8 +10,19 @@ export interface EditPageProps extends BaseProps {
     params: { id: string };
 }
 
-export abstract class BaseEditPage<T extends object, F extends FormSchema<T>, P extends EditPageProps, S extends BaseFormState<T>>
-    extends BaseFormPage<T, F, P, S> {
+/**
+ * Página base para edição de registros existentes.
+ * * @template T  **Entity**: O tipo do objeto que está sendo editado (ex: Category).
+ * @template F  **Schema**: A estrutura do formulário (FormSchema<T>).
+ * @template P  **Props**: As propriedades do componente (Padrão: EditPageProps).
+ * @template S  **State**: O estado do componente (Padrão: BaseFormState<T>).
+ */
+export abstract class BaseEditPage<
+    T extends object,
+    F extends FormSchema<T>,
+    P extends EditPageProps = EditPageProps,       // Valor padrão adicionado
+    S extends BaseFormState<T> = BaseFormState<T>  // Valor padrão adicionado
+> extends BaseFormPage<T, F, P, S> {
 
     constructor(props: P, state: S) {
         super(props, state);

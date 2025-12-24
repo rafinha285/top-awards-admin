@@ -10,7 +10,17 @@ export interface BaseListState<T> extends BaseState{
     itens: T[]
 }
 
-export abstract class BaseListPage<T extends { id?: string | number | null }, P extends BaseProps, S extends BaseListState<T>> extends BasePage<P, S>{
+/**
+ * Pagina base para lista
+ * @template T Objeto que será exibido (ex: Category)
+ * @template P Props (padrão BaseProps)
+ * @template S State (padrão BaseListState<T>)
+ */
+export abstract class BaseListPage<
+    T extends { id?: string | number | null },
+    P extends BaseProps = BaseProps,
+    S extends BaseListState<T> = BaseListState<T>
+> extends BasePage<P, S>{
     constructor(props: P) {
         super(props, {
             itens: [],

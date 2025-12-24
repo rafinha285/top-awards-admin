@@ -10,6 +10,9 @@ import {EventListPage} from "./pages/listPages/EventListPage.tsx";
 import {CategoryListPage} from "./pages/listPages/CategoryListPage.tsx";
 import {CategoryCreationPage} from "./pages/creationPages/CategoryCreationPage.tsx";
 import {CategoryEditPage} from "./pages/editPages/CategoryEditPage.tsx";
+import {NomineeListPage} from "./pages/listPages/NomineeListPage.tsx";
+import {NomineeEditPage} from "./pages/editPages/NomineeEditPage.tsx";
+import {NomineeCreationPage} from "./pages/creationPages/NomineeCreationPage.tsx";
 
 const NavigationSetup = () => {
     const navigate = useNavigate();
@@ -36,6 +39,10 @@ function App() {
                     <Route path="/edit/category" element={<CategoryListPage/>}/>
                     <Route path="/create/category" element={<CategoryCreationPage/>}/>
                     <Route path="/edit/category/:id" element={<CategoryEditPage/>}/>
+
+                    <Route path="/edit/nominee" element={<NomineeListPage/>}/>
+                    <Route path="/edit/nominee/:id" element={<NomineeEditPage/>}/>
+                    <Route path="/create/nominee" element={<NomineeCreationPage/>}/>
                 </Routes>
             </UserProvider>
         </Router>

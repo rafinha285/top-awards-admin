@@ -1,9 +1,8 @@
-import {BaseListPage, type BaseListState} from "./BaseListPage.tsx";
+import {BaseListPage} from "./BaseListPage.tsx";
 import type Event from "../../types/Event.ts"
-import type {BaseProps} from "../BasePage.tsx";
 import type {Column} from "../../components/ListItem.tsx";
 
-export class EventListPage extends BaseListPage<Event, BaseProps, BaseListState<Event>>{
+export class EventListPage extends BaseListPage<Event>{
     protected getColumns(): Column<Event>[] {
         return [
             {

@@ -1,4 +1,4 @@
 export interface Nominee {
-    id: number;
+    id: number | null;
     name: string;
 }
