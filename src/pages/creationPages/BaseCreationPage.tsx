@@ -2,7 +2,7 @@ import {BaseFormPage, type BaseFormState} from "../BaseFormPage.tsx";
 import type {BaseProps} from "../BasePage.tsx";
 import type {FormSchema} from "../../types/FromOption.ts";
 
-export abstract class BaseCreationPage<T extends object, F extends FormSchema<T>, P extends BaseProps> extends BaseFormPage<T, F, P, BaseFormState<T>> {
+export abstract class BaseCreationPage<T extends object, F extends FormSchema<T>, P extends BaseProps, S extends BaseFormState<T>> extends BaseFormPage<T, F, P, S> {
     protected abstract getResourceName(): string;
 
     protected async handleSubmit(): Promise<void> {

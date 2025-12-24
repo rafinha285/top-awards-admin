@@ -13,11 +13,11 @@ export class HomePage extends BasePage<BaseProps, HomeState>{
                     <Link to={"/edit/event"} className="menu-item">
                         <p>Eventos</p>
                     </Link>
-                    <Link to={"/create/nominee"} className="menu-item">
-                        <p>Criar Nomeado</p>
+                    <Link to={"/edit/nominee"} className="menu-item">
+                        <p>Nomeados</p>
                     </Link>
-                    <Link to={"/create/category"} className="menu-item">
-                        <p>Criar Categoria</p>
+                    <Link to={"/edit/category"} className="menu-item">
+                        <p>Categorias</p>
                     </Link>
                     <Link to={"/moderate/users"} className="menu-item">
                         <p>Gerenciar usuários</p>

@@ -37,6 +37,26 @@ export abstract class BaseFormPage<
         }));
     }
 
+    protected handleMultiSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
+        const { id, options } = e.target;
+        const selectedValues: string[] = [];
+
+        // Percorre as opções e pega todas que estão selecionadas
+        for (let i = 0; i < options.length; i++) {
+            if (options[i].selected) {
+                selectedValues.push(options[i].value);
+            }
+        }
+
+        this.setState(prevState => ({
+            ...prevState,
+            formData: {
+                ...prevState.formData,
+                [id]: selectedValues // Salva como Array de strings
+            }
+        }));
+    }
+
     protected renderForm(schema: F): React.ReactNode {
         if(!this.state.formData) {
             return null
@@ -77,6 +97,28 @@ export abstract class BaseFormPage<
                             />
                         )
                         break;
+                    case 'multiselect':
+                        // Garante que o value seja um array para o React não reclamar
+                        {
+                            const arrayValue = Array.isArray(value) ? value.map(String) : [];
+
+                            inputElement = (
+                                <select
+                                    id={key as string}
+                                    multiple // Permite selecionar vários (segure Ctrl/Cmd)
+                                    value={arrayValue}
+                                    onChange={this.handleMultiSelectChange}
+                                    style={{ height: '120px' }} // Altura maior para ver a lista
+                                >
+                                    {field.options?.map(option => (
+                                        <option key={option.value} value={option.value}>
+                                            {option.label}
+                                        </option>
+                                    ))}
+                                </select>
+                            );
+                            break;
+                        }
                     case 'text':
                     default:
                         inputElement = <input id={key as string} value={String(value)} onChange={this.handleChange}/>;
@@ -103,6 +145,9 @@ export abstract class BaseFormPage<
 
     protected renderContent(): React.ReactNode {
         const schema = this.getFormSchema();
+        if (!schema) {
+            return null;
+        }
         return (
             <div className="form-wrapper">
                 <div className="form-header">

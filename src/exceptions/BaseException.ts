@@ -56,8 +56,10 @@ export class BaseException extends Error{
     }
 
     toString(){
+        const codeString = this.errCode ? this.errCode.toString() : "NO_CODE";
+
         return `name=${this.name}
-        errCode = ${this.errCode.toString()}
+        errCode = ${codeString}
         message = ${this.message}`
     }
 }

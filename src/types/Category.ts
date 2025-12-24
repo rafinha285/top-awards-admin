@@ -1,6 +1,10 @@
+import "./Event"
+
 export interface Category {
-    id: number;
+    id: number| null;
     name: string;
     description: string;
-    eventId: number;
+    eventId: number| null;
+    event: Event | null;
+    nomineeIds: number[]
 }
