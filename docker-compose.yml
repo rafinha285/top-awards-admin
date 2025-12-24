@@ -15,4 +15,4 @@ services:
     
     # Mapeia a porta 80 do container para a 8080 do servidor
     ports:
-      - "8081:8081"
+      - "8082:8082"
