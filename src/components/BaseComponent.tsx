@@ -2,7 +2,7 @@ import type {AxiosResponse} from "axios";
 import type {ResponseType} from "../types/ResponseTypes.ts";
 import * as React from "react";
 import axios from "axios";
-import {API_URL} from "../Consts.ts";
+import {API_URL} from "../config.ts";
 import FingerprintJS from '@fingerprintjs/fingerprintjs';
 import {UserContext} from "../context/UserContext.tsx";
 

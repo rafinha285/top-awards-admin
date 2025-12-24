@@ -2,17 +2,17 @@ version: '3.8'
 
 services:
   frontend:
-    # Nome do container para ficar fácil de achar
     container_name: topawards-admin-front
-    
-    # Diz para o Docker construir usando o Dockerfile que está na raiz do repo
+    image: seu-usuario/topawards-front:latest # Ou use o build context abaixo
     build:
       context: .
       dockerfile: Dockerfile
-    
-    # Reinicia sempre que o servidor ligar ou se cair
+      # Não precisa mais de args aqui!
+
     restart: always
-    
-    # Mapeia a porta 80 do container para a 8080 do servidor
     ports:
       - "8082:8082"
+
+    # AQUI ESTÁ A MÁGICA PARA O PORTAINER:
+    environment:
+      - VITE_API_URL=https://awards-api.animefoda.org:8080

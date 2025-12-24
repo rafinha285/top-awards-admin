@@ -1,34 +1,27 @@
-# Estágio 1: Build (Construção)
-FROM node:20-alpine AS builder
-
+# Estágio de Build
+FROM node:20-alpine as build
 WORKDIR /app
-
-# Copia arquivos de dependência
-COPY package.json package-lock.json ./
-
-# Instala dependências
-RUN npm ci
-
-# Copia todo o código fonte
+COPY package*.json ./
+RUN npm install
 COPY . .
-
-# Gera a pasta 'dist' (Build de produção)
-# Se o seu script de build for diferente, ajuste aqui (ex: npm run build:prod)
 RUN npm run build
 
-# Estágio 2: Servidor (Nginx)
+# Estágio de Produção (Nginx)
 FROM nginx:alpine
 
-# Remove configuração padrão do Nginx
-RUN rm /etc/nginx/conf.d/default.conf
+# Copia os arquivos do build (React/Vite)
+COPY --from=build /app/dist /usr/share/nginx/html
 
-# Copia nossa configuração customizada
-COPY nginx.conf /etc/nginx/conf.d
+# Copia o script que criamos
+COPY ./env.sh /docker-entrypoint.d/env.sh
 
-# Copia os arquivos gerados no estágio 1 para o Nginx
-# ATENÇÃO: Vite cria a pasta 'dist'. Se usar CRA, mude para 'build'
-COPY --from=builder /app/dist /usr/share/nginx/html
+# Dá permissão de execução
+RUN chmod +x /docker-entrypoint.d/env.sh
 
-EXPOSE 80
+# Configuração Padrão do Nginx para SPA (React Router) - Opcional mas recomendado
+# Se você tiver um arquivo nginx.conf personalizado, descomente abaixo
+# COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-CMD ["nginx", "-g", "daemon off;"]
+# O ENTRYPOINT do script.
+# Vamos usar o shell para rodar o script e depois lançar o nginx
+CMD ["/bin/sh", "-c", "/docker-entrypoint.d/env.sh && nginx -g 'daemon off;'"]
