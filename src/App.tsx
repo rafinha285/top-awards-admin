@@ -9,6 +9,7 @@ import {EventEditPage} from "./pages/editPages/EventEditPage.tsx";
 import {EventListPage} from "./pages/listPages/EventListPage.tsx";
 import {CategoryListPage} from "./pages/listPages/CategoryListPage.tsx";
 import {CategoryCreationPage} from "./pages/creationPages/CategoryCreationPage.tsx";
+import {CategoryEditPage} from "./pages/editPages/CategoryEditPage.tsx";
 
 const NavigationSetup = () => {
     const navigate = useNavigate();
@@ -34,6 +35,7 @@ function App() {
 
                     <Route path="/edit/category" element={<CategoryListPage/>}/>
                     <Route path="/create/category" element={<CategoryCreationPage/>}/>
+                    <Route path="/edit/category/:id" element={<CategoryEditPage/>}/>
                 </Routes>
             </UserProvider>
         </Router>

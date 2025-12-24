@@ -2,6 +2,7 @@ import {BaseListPage, type BaseListState} from "./BaseListPage.tsx";
 import type {Category} from "../../types/Category.ts";
 import type {BaseProps} from "../BasePage.tsx";
 import type { Column } from "../../components/ListItem.tsx";
+import type Event from "../../types/Event.ts";
 
 export class CategoryListPage extends BaseListPage<Category, BaseProps, BaseListState<Category>> {
     protected getResourceName(): string {
@@ -20,7 +21,8 @@ export class CategoryListPage extends BaseListPage<Category, BaseProps, BaseList
             },
             {
                 header: "Evento",
-                accessor: "event"
+                accessor: "event",
+                render: (val) => (val as Event)?.name || "Sem evento"
             }
         ]
     }

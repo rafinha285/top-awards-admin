@@ -10,16 +10,11 @@ export interface EditPageProps extends BaseProps {
     params: { id: string };
 }
 
-export abstract class BaseEditPage<T extends object, F extends FormSchema<T>, P extends EditPageProps>
-    extends BaseFormPage<T, F, P, BaseFormState<T>> {
+export abstract class BaseEditPage<T extends object, F extends FormSchema<T>, P extends EditPageProps, S extends BaseFormState<T>>
+    extends BaseFormPage<T, F, P, S> {
 
-    constructor(props: P) {
-        super(props, {
-            loading: true, // Começa carregando para evitar renderizar form vazio
-            error: null,
-            title: "Carregando...", // Título temporário
-            formData: {} as T // Objeto vazio para não dar undefined
-        });
+    constructor(props: P, state: S) {
+        super(props, state);
     }
 
     protected abstract getResourceName(): string;

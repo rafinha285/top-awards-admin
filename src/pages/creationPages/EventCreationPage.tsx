@@ -11,7 +11,9 @@ const EVENT_FORM_SCHEMA: FormSchema<Event> = {
     id : null
 }
 
-export class EventCreationPage extends BaseCreationPage<Event, typeof EVENT_FORM_SCHEMA, BaseProps>{
+type EventCreationState = BaseFormState<Event>
+
+export class EventCreationPage extends BaseCreationPage<Event, typeof EVENT_FORM_SCHEMA, BaseProps, EventCreationState>{
     protected getResourceName(): string {
         return "event";
     }

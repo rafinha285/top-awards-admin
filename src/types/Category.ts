@@ -1,4 +1,5 @@
-import "./Event"
+import type Event from "./Event.ts"
+import type {Nominee} from "./Nominee.ts";
 
 export interface Category {
     id: number| null;
@@ -6,5 +7,6 @@ export interface Category {
     description: string;
     eventId: number| null;
     event: Event | null;
-    nomineeIds: number[]
+    nomineeIds: number[];
+    nominees: Nominee[] | null;
 }

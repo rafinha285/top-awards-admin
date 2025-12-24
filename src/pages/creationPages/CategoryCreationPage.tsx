@@ -5,7 +5,6 @@ import type { BaseProps } from "../BasePage.tsx";
 import type { FormOption, FormSchema } from "../../types/FromOption.ts";
 import type { BaseFormState } from "../BaseFormPage.tsx";
 import { BaseException } from "../../exceptions/BaseException.ts";
-import { type ResponseType } from "../../types/ResponseTypes.ts";
 import type {Nominee} from "../../types/Nominee.ts";
 
 interface CategoryPageState extends BaseFormState<Category> {
@@ -28,7 +27,8 @@ export class CategoryCreationPage extends BaseCreationPage<Category, FormSchema<
                 event: null,
 
                 // 2. IMPORTANTE: Inicializar array vazio para o backend aceitar
-                nomineeIds: []
+                nomineeIds: [],
+                nominees: []
             },
             eventOptions: [],
             nomineeOptions: [] // Inicializa vazio
@@ -41,16 +41,16 @@ export class CategoryCreationPage extends BaseCreationPage<Category, FormSchema<
 
             // 3. Busca Eventos E Nomeados ao mesmo tempo (Paralelo)
             const [eventRes, nomineeRes] = await Promise.all([
-                this.getFromApi<ResponseType<Event[]>>("/event"),
-                this.getFromApi<ResponseType<Nominee[]>>("/nominee") // Ajuste a URL conforme sua API
+                this.getFromApi<Event[]>("/event"),
+                this.getFromApi<Nominee[]>("/nominee") // Ajuste a URL conforme sua API
             ]);
 
             // Verifica erros
             if (!eventRes.data.success) throw new BaseException(eventRes.data);
             if (!nomineeRes.data.success) throw new BaseException(nomineeRes.data);
 
-            const events = eventRes.data.data.data;
-            const nominees = nomineeRes.data.data.data;
+            const events = eventRes.data.data;
+            const nominees = nomineeRes.data.data;
 
             // Transforma Eventos em Opções
             const evtOptions: FormOption[] = events.map((evt: Event) => ({
@@ -107,7 +107,8 @@ export class CategoryCreationPage extends BaseCreationPage<Category, FormSchema<
                 label: "Indicados",
                 type: "multiselect", // Certifique-se que implementou 'multiselect' na BaseFormPage
                 options: state.nomineeOptions
-            }
+            },
+            nominees: null
         };
     }
 
