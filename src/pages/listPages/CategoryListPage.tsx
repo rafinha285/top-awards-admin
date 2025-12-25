@@ -11,6 +11,10 @@ export class CategoryListPage extends BaseListPage<Category, BaseProps, BaseList
     protected getColumns(): Column<Category>[] {
         return [
             {
+                header: "Id",
+                accessor: "id",
+            },
+            {
                 header: "Nome",
                 accessor: "name",
                 // width: "40%" // Essa coluna ocupa 40%
