@@ -35,6 +35,9 @@ export abstract class BaseListPage<
         this.fetchItems();
     }
 
+    protected canCreate(): boolean {
+        return true;
+    }
     protected abstract getResourceName(): string;
     protected abstract getColumns(): Column<T>[];
 
@@ -66,12 +69,14 @@ export abstract class BaseListPage<
             <div className="list-page-wrapper">
                 <div className="list-header">
                     <h1>{this.state.title}</h1>
-                    <Link
-                        to={`/create/${this.getResourceName()}`}
-                        className={"btn create"}
-                    >
-                         <FontAwesomeIcon icon={faPlus}/> Novo
-                    </Link>
+                    {this.canCreate() && (
+                        <Link
+                            to={`/create/${this.getResourceName()}`}
+                            className={"btn create"}
+                        >
+                            <FontAwesomeIcon icon={faPlus}/> Novo
+                        </Link>
+                    )}
                 </div>
 
                 {/* Cabeçalho da Lista (Opcional, estilo tabela) */}

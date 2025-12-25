@@ -1,11 +1,11 @@
-import type {BaseState} from "../pages/BasePage";
+import type { BaseState } from "../pages/BasePage";
 
 export interface FormOption {
     label: string;
     value: string;
 }
 
-export type FieldType = 'text' | 'textarea' | 'date' | 'select' | 'readonly' | 'multiselect';
+export type FieldType = 'text' | 'textarea' | 'date' | 'select' | 'readonly' | 'multiselect' | 'image';
 
 export interface FormField {
     label: string;
