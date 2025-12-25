@@ -17,3 +17,24 @@ services:
 
     environment:
       - VITE_API_URL=https://awards-api.animefoda.org
+    
+    # Monta o volume de imagens do Samba
+    volumes:
+      - truenas_images:/usr/share/nginx/html/images:ro
+    
+    networks:
+      - rede_compartilhada
+
+networks:
+  rede_compartilhada:
+    external: true
+    name: ${NETWORK_NAME}
+
+# Volume CIFS para montar o Samba do TrueNAS  
+volumes:
+  truenas_images:
+    driver: local
+    driver_opts:
+      type: cifs
+      o: "username=${SAMBA_USER},password=${SAMBA_PASS},uid=1000,gid=1000,file_mode=0644,dir_mode=0755"
+      device: "//192.168.18.63/hdd/awards-imgs"

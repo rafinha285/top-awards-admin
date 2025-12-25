@@ -1,6 +1,7 @@
-import {BaseFormPage, type BaseFormState} from "../BaseFormPage.tsx";
-import type {BaseProps} from "../BasePage.tsx";
-import type {FormSchema} from "../../types/FromOption.ts";
+import { BaseFormPage, type BaseFormState } from "../BaseFormPage.tsx";
+import type { BaseProps } from "../BasePage.tsx";
+import type { FormSchema } from "../../types/FromOption.ts";
+import { BaseException } from "../../exceptions/BaseException.ts";
 
 /**
  * Página base para criação de novos registros.
@@ -19,10 +20,22 @@ export abstract class BaseCreationPage<
 
     protected async handleSubmit(): Promise<void> {
         const resource = this.getResourceName();
-        // POST /event com o formData
-        await this.postToApi(`/${resource}/new`, this.state.formData);
 
-        alert("Criado com sucesso!");
-        this.navigate("/home"); // Ou redirecionar para a lista
+        try {
+            this.setState(prevState => ({ ...prevState, loading: true }));
+
+            const response = await this.postToApi<T, T>(`/${resource}/new`, this.state.formData);
+
+            if (!response.data.success) {
+                throw new BaseException(response.data);
+            }
+
+            alert("Criado com sucesso!");
+            this.navigate("/home");
+        } catch (e) {
+            this.setError(e);
+        } finally {
+            this.setState(prevState => ({ ...prevState, loading: false }));
+        }
     }
 }

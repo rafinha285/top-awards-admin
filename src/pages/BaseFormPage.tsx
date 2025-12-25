@@ -1,17 +1,18 @@
-import {BasePage, type BaseProps, type BaseState} from "./BasePage.tsx";
-import type {FormSchema, FormState} from "../types/FromOption.ts";
-import  {type ChangeEvent, type JSX} from "react";
+import { BasePage, type BaseProps, type BaseState } from "./BasePage.tsx";
+import type { FormSchema, FormState } from "../types/FromOption.ts";
+import { type ChangeEvent, type JSX } from "react";
 import "../css/creationPage.scss"
 import * as React from "react";
+import { API_URL } from "../config.ts";
 
-export interface BaseFormState<T> extends BaseState, FormState<T> {}
+export interface BaseFormState<T> extends BaseState, FormState<T> { }
 
 export abstract class BaseFormPage<
     T extends object,
     F extends FormSchema<T>,
     P extends BaseProps,
     S extends BaseFormState<T>
-> extends BasePage<P, S>{
+> extends BasePage<P, S> {
     public constructor(props: P, initialState: S);
     public constructor(initialState: S);
     public constructor(arg1: P | S, arg2?: S) {
@@ -27,7 +28,7 @@ export abstract class BaseFormPage<
     }
 
     protected handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-        const {id, value} = e.target;
+        const { id, value } = e.target;
         this.setState(prevState => ({
             ...prevState,
             formData: {
@@ -57,8 +58,61 @@ export abstract class BaseFormPage<
         }));
     }
 
+    /**
+     * Handler para upload de imagem
+     */
+    protected handleImageUpload = async (e: ChangeEvent<HTMLInputElement>, fieldKey: string) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        // Validar tipo de arquivo
+        if (!file.type.startsWith('image/')) {
+            alert('Por favor, selecione apenas arquivos de imagem.');
+            return;
+        }
+
+        // Mostrar loading
+        this.setState(prevState => ({ ...prevState, loading: true }));
+
+        try {
+            const formData = new FormData();
+            formData.append('file', file);
+
+            const token = localStorage.getItem('token');
+
+            const response = await fetch(`${API_URL}/images/upload?folder=nominees`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+                body: formData
+            });
+
+            if (!response.ok) {
+                throw new Error('Falha no upload da imagem');
+            }
+
+            const result = await response.json();
+            const imageUrl = result.data?.url || result.data?.relativePath;
+
+            // Atualiza o estado com a URL da imagem
+            this.setState(prevState => ({
+                ...prevState,
+                loading: false,
+                formData: {
+                    ...prevState.formData,
+                    [fieldKey]: imageUrl
+                }
+            }));
+        } catch (error) {
+            console.error('Erro no upload:', error);
+            alert('Erro ao fazer upload da imagem. Tente novamente.');
+            this.setState(prevState => ({ ...prevState, loading: false }));
+        }
+    }
+
     protected renderForm(schema: F): React.ReactNode {
-        if(!this.state.formData) {
+        if (!this.state.formData) {
             return null
         }
         return this.typedEntries(schema).map(([key, field]) => {
@@ -71,7 +125,7 @@ export abstract class BaseFormPage<
             if (field) {
                 switch (field.type) {
                     case 'textarea':
-                        inputElement = <textarea id={key as string} value={String(value)} onChange={this.handleChange}/>
+                        inputElement = <textarea id={key as string} value={String(value)} onChange={this.handleChange} />
                         break
                     case 'select':
                         inputElement = (
@@ -84,7 +138,7 @@ export abstract class BaseFormPage<
                         );
                         break;
                     case 'date':
-                        inputElement = <input id={key as string} value={String(value)} type="date" onChange={this.handleChange}/>;
+                        inputElement = <input id={key as string} value={String(value)} type="date" onChange={this.handleChange} />;
                         break;
                     case 'readonly':
                         inputElement = (
@@ -93,7 +147,7 @@ export abstract class BaseFormPage<
                                 value={String(value)}
                                 type="text"
                                 disabled
-                                style={{ backgroundColor: "#e9ecef" , cursor: "not-allowed", color: '#6c757d'}}
+                                style={{ backgroundColor: "#e9ecef", cursor: "not-allowed", color: '#6c757d' }}
                             />
                         )
                         break;
@@ -119,9 +173,49 @@ export abstract class BaseFormPage<
                             );
                             break;
                         }
+                    case 'image':
+                        {
+                            const imageUrl = value as string | null | undefined;
+                            const fullImageUrl = imageUrl && !imageUrl.startsWith('http')
+                                ? `${API_URL}${imageUrl}`
+                                : imageUrl;
+
+                            inputElement = (
+                                <div className="image-upload-field">
+                                    {fullImageUrl && (
+                                        <div className="image-preview">
+                                            <img
+                                                src={fullImageUrl}
+                                                alt="Preview"
+                                                style={{
+                                                    maxWidth: '2em',
+                                                    maxHeight: '2em',
+                                                    objectFit: 'cover',
+                                                    borderRadius: '8px',
+                                                    marginBottom: '10px'
+                                                }}
+                                            />
+                                        </div>
+                                    )}
+                                    <input
+                                        id={key as string}
+                                        type="file"
+                                        accept="image/*"
+                                        onChange={(e) => this.handleImageUpload(e, key as string)}
+                                        style={{ marginTop: '5px' }}
+                                    />
+                                    {/*{imageUrl && (*/}
+                                    {/*    <small style={{ color: '#666', display: 'block', marginTop: '5px' }}>*/}
+                                    {/*        {imageUrl}*/}
+                                    {/*    </small>*/}
+                                    {/*)}*/}
+                                </div>
+                            );
+                            break;
+                        }
                     case 'text':
                     default:
-                        inputElement = <input id={key as string} value={String(value)} onChange={this.handleChange}/>;
+                        inputElement = <input id={key as string} value={String(value)} onChange={this.handleChange} />;
                         break;
                 }
                 return (
