@@ -26,10 +26,12 @@
                 border: none;
                 flex-direction: column-reverse;
                 gap: 1rem;
+                align-items: center;
                 .image-preview{
                     margin:0;
                     padding: 0;
                     overflow: hidden;
+                    width: max-content;
                     img{
                         max-width: 15em;
                         object-fit: cover;
