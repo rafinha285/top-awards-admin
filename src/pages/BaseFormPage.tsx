@@ -187,13 +187,13 @@ export abstract class BaseFormPage<
                                             <img
                                                 src={fullImageUrl}
                                                 alt="Preview"
-                                                style={{
-                                                    maxWidth: '2em',
-                                                    maxHeight: '2em',
-                                                    objectFit: 'cover',
-                                                    borderRadius: '8px',
-                                                    marginBottom: '10px'
-                                                }}
+                                                // style={{
+                                                    // maxWidth: '2em',
+                                                    // maxHeight: '2em',
+                                                    // objectFit: 'cover',
+                                                    // borderRadius: '8px',
+                                                    // marginBottom: '10px'
+                                                // }}
                                             />
                                         </div>
                                     )}
