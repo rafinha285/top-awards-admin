@@ -56,7 +56,14 @@ export abstract class BaseEditPage<
         }
     }
 
+    canDelete(): boolean{
+        return true;
+    }
+
     protected headerActions(): React.ReactNode {
+        if(!this.canDelete()){
+            return null;
+        }
         return (
             <button
                 className="btn remove"
