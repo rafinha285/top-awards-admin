@@ -1,16 +1,17 @@
-import {BaseCreationPage} from "./BaseCreationPage.tsx";
-import type {Nominee} from "../../types/Nominee.ts";
-import type {FormSchema} from "../../types/FromOption.ts";
-import type {BaseFormState} from "../BaseFormPage.tsx";
+import { BaseCreationPage } from "./BaseCreationPage.tsx";
+import type { Nominee } from "../../types/Nominee.ts";
+import type { FormSchema } from "../../types/FromOption.ts";
+import type { BaseFormState } from "../BaseFormPage.tsx";
 
-export class NomineeCreationPage extends BaseCreationPage<Nominee, FormSchema<Nominee>>{
+export class NomineeCreationPage extends BaseCreationPage<Nominee, FormSchema<Nominee>> {
     protected getResourceName(): string {
         return "nominee"
     }
     protected getFormSchema(): FormSchema<Nominee> {
         return {
             id: null,
-            name: {label: "Nome", type: "text"},
+            name: { label: "Nome", type: "text" },
+            imageUrl: { label: "Imagem", type: "image" },
         }
     }
 
@@ -18,9 +19,10 @@ export class NomineeCreationPage extends BaseCreationPage<Nominee, FormSchema<No
         error: null,
         loading: false,
         title: "Criar Nomeado",
-        formData:{
+        formData: {
             id: null,
-            name: ""
+            name: "",
+            imageUrl: null
         }
     }
 
