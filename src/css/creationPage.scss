@@ -23,6 +23,16 @@
             justify-content: space-between;
             .image-upload-field{
                 border: none;
+                flex-direction: column-reverse;
+                gap: 1rem;
+                .image-preview{
+                    padding: 0;
+                    overflow: hidden;
+                    img{
+                        max-width: 15em;
+                        object-fit: cover;
+                    }
+                }
             }
         }
     }
