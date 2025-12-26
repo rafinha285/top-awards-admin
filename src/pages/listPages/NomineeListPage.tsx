@@ -9,13 +9,13 @@ export class NomineeListPage extends BaseListPage<Nominee> {
     protected getColumns(): Column<Nominee>[] {
         return [
             {
+                header: "Id",
+                accessor: "id"
+            },
+            {
                 header: "Nome",
                 accessor: "name"
             },
-            {
-                header: "Id",
-                accessor: "id"
-            }
         ]
     }
 

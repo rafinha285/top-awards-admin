@@ -8,8 +8,8 @@ import type {BaseFormState} from "../BaseFormPage.tsx";
 const EVENT_FORM_SCHEMA: FormSchema<Event> = {
     id : {label: "Id", type: "readonly"},
     name: {label:"Nome", type: "text"},
-    endDate: {label: "Fim do evento", type: "date"},
     startDate: {label: "Inicio do evento", type: "date"},
+    endDate: {label: "Fim do evento", type: "date"},
 }
 
 class EventEditPageInternal extends BaseEditPage<Event, typeof EVENT_FORM_SCHEMA, EditPageProps> {
