@@ -18,6 +18,12 @@ export interface BaseState{
     loading: boolean,
 }
 
+
+/**
+ * Base Page
+ * @template P `BaseProps` propriedades do BasePage
+ * @template S `BaseState` state do component
+ */
 export abstract class BasePage<P extends BaseProps, S extends BaseState> extends BaseComponent<P, S>{
 
     public constructor(props: P, initialState: S);

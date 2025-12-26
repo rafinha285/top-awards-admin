@@ -6,8 +6,8 @@ import type {BaseFormState} from "../BaseFormPage.tsx";
 
 const EVENT_FORM_SCHEMA: FormSchema<Event> = {
     name: {label:"Nome", type: "text"},
-    endDate: {label: "Fim do evento", type: "date"},
     startDate: {label: "Inicio do evento", type: "date"},
+    endDate: {label: "Fim do evento", type: "date"},
     id : null
 }
 

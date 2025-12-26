@@ -6,6 +6,11 @@ type HomeState = BaseState & {
 }
 
 export class HomePage extends BasePage<BaseProps, HomeState>{
+    state: BaseState = {
+        error: null,
+        loading: false,
+        title: "Home admin"
+    }
     protected renderContent(): React.ReactNode {
         return (
             <>
